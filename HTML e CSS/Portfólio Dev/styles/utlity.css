@@ -1,0 +1,47 @@
+.title-lg {
+  font: var(--title-lg);
+}
+
+.title-sm {
+  font: var(--title-sm);
+}
+
+.title-md {
+  font: var(--title-md);
+}
+
+.subtitle {
+  font: var(--subtitle);
+}
+
+.text-sm {
+  font: var(--text-sm);
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-flow-col {
+  grid-auto-flow: column;
+}
+
+.red {
+  color: var(--red);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.green {
+  color: var(--green);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.purple {
+  color: var(--purple);
+}
