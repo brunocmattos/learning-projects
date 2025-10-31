@@ -1,8 +1,6 @@
 #!/bin/bash
-# fop2_paused.sh
+# fop2_pauses.sh
 # Lista ramais pausados no Asterisk/FOP2 em formato CSV
-# Uso:
-#   fop2_paused.sh [--no-header] [--ramal <ext>] [--pausa <nome>]
 
 NO_HEADER=0
 FILTER_RAMAL=""
@@ -32,39 +30,41 @@ done
 
 # --- cabeçalho ---
 if [[ $NO_HEADER -eq 0 ]]; then
-  echo "ramal;nome;pausa;duração"
+  echo "ramal;nome;pausa;duração;segundos"
 fi
 
 # --- coleta de pausas ---
-asterisk -rx "queue show" | grep -i "(paused:" | while IFS= read -r line; do
-  # Extrai ramal (número após PJSIP/ ou SIP/ ou Local/)
+asterisk -rx "queue show" | grep -iE "\(paused:.+was [0-9]+ secs ago\)" | while IFS= read -r line; do
+  # Extrai ramal
   ext=$(echo "$line" | grep -oE '(PJSIP|SIP|Local)/[0-9]+' | grep -oE '[0-9]+' | head -n1)
   
-  # Extrai nome (primeiro campo, removendo espaços)
+  # Extrai nome
   nome=$(echo "$line" | awk '{print $1}' | tr -d ' ')
   
-  # Extrai pausa (texto entre "paused:" e " was")
+  # Extrai pausa
   pausa=$(echo "$line" | sed -n 's/.*paused:\([^)]*\) was.*/\1/p' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
   
-  # Extrai segundos - APENAS o primeiro "was X secs ago" (ignora o segundo "login was")
+  # Extrai segundos DIRETO (valor original do Asterisk)
   secs=$(echo "$line" | sed -n 's/.*paused:[^)]*was \([0-9]\+\) secs ago.*/\1/p')
   
   # Se não encontrou segundos, pula
   [[ -z "$secs" ]] && continue
   
-  # Formata duração em horas:minutos
+  # Formata duração legível (HH:MM ou MM:SS dependendo do valor)
   horas=$((secs/3600))
   mins=$(((secs%3600)/60))
+  segs=$((secs%60))
   
   if [[ $horas -gt 0 ]]; then
-    duracao=$(printf "%d:%02d" $horas $mins)
+    duracao=$(printf "%d:%02d:%02d" $horas $mins $segs)
   else
-    duracao=$(printf "%d:%02d" $mins $((secs%60)))
+    duracao=$(printf "%d:%02d" $mins $segs)
   fi
 
-  # filtros opcionais
+  # Filtros opcionais
   [[ -n "$FILTER_RAMAL" && "$ext" != "$FILTER_RAMAL" ]] && continue
   [[ -n "$FILTER_PAUSA" && "$pausa" != "$FILTER_PAUSA" ]] && continue
 
-  echo "$ext;$nome;$pausa;$duracao"
+  # Output: ramal;nome;pausa;duração_legível;segundos_totais
+  echo "$ext;$nome;$pausa;$duracao;$secs"
 done | sort -u
