@@ -1,0 +1,204 @@
+/* Reset e base */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* ============================= */
+/* VARIÁVEIS GLOBAIS             */
+/* ============================= */
+:root {
+  --background-primary: #F4F5FB;
+  --background-secondary: #FFFFFF;
+  --color-brand: #CA3884;
+  --color-brand-hover: #A52C6B;
+  --color-danger: #C93847;
+  --content-primary: #080B12;
+  --content-secondary: #374151;
+  --content-tertiary: #9CA3AF;
+  --always-white: #FFFFFF;
+  --border-primary: #D1D5DB;
+  --border-hover: #B9C2D0;
+
+  --font-family-inter: "Inter", sans-serif;
+  --logo: 700 2rem/1.7 var(--font-family-inter);
+  --title: 700 1.5rem/1.7 var(--font-family-inter);
+  --label: 600 1rem/1.5 var(--font-family-inter);
+  --paragraph: 500 1rem/1.5 var(--font-family-inter);
+  --link: 500 0.875rem/1 var(--font-family-inter);
+}
+
+/* ============================= */
+/* UTILITÁRIOS                   */
+/* ============================= */
+.flex {
+  display: flex;
+}
+
+.container {
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+/* ============================= */
+/* LAYOUT GERAL                  */
+/* ============================= */
+body {
+  width: 100vw;
+  background-color: var(--background-primary);
+}
+
+/* ============================= */
+/* LOGO                          */
+/* ============================= */
+#div-logo {
+  margin-top: 1.5rem;
+  margin-bottom: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#div-logo img {
+  height: 1.5rem;
+}
+
+#text-logo {
+  font: var(--logo);
+  color: var(--content-secondary);
+}
+
+/* ============================= */
+/* CABEÇALHO                     */
+/* ============================= */
+header a {
+  font: var(--link);
+  color: var(--color-brand);
+  text-decoration: none;
+  &:hover {
+    color: var(--color-brand-hover);
+  }
+}
+
+/* ============================= */
+/* FORMULÁRIO                    */
+/* ============================= */
+form {
+  margin-bottom: 2.5rem;
+}
+
+form h1 {
+  margin-top: 1rem;
+  font: var(--title);
+  color: var(--content-primary);
+}
+
+header {
+    margin-top: 2.75rem;
+}
+
+form .flex {
+  gap: 1rem;
+}
+
+#new-item {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-primary);
+  border-radius: .75rem;
+  font: 400 1rem/1 var(--font-family-inter);
+  &:hover {
+    border-color: var(--border-hover);
+  }
+}
+
+/* Botão principal */
+.btn-primary {
+  all: unset;
+  background-color: var(--color-brand);
+  font: var(--label);
+  color: var(--always-white);
+  padding: .75rem 1.5rem;
+  border-radius: .75rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  &:hover {
+    background-color: var(--color-brand-hover);
+  }
+}
+
+/* ============================= */
+/* LISTA DE ITENS                */
+/* ============================= */
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+/* Checkbox customizado */
+input[type="checkbox"] {
+  accent-color: var(--color-brand);
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  border-radius: .25rem; /* leve arredondamento */
+}
+
+/* Item da lista */
+.item-list {
+  font: var(--paragraph);
+  color: var(--content-primary);
+  align-items: center;
+  background-color: var(--background-secondary);
+  padding: .75rem 1rem;
+  border-radius: .75rem;
+}
+
+.item-list span {
+  margin-left: .75rem;
+}
+
+.item-list img {
+  margin-left: auto;
+  width: 1rem;
+  cursor: pointer;
+}
+
+
+/* ============================= */
+/* AVISO ITEM REMOVIDO           */
+/* ============================= */
+
+.aviso-remover {
+  margin-top: 2rem;
+  font: var(--label);
+  color: var(--always-white);
+  align-items: center;
+  background-color: var(--color-danger);
+  padding: .75rem 1rem;
+  border-radius: .75rem;
+}
+
+.aviso-remover span {
+  margin-left: .75rem;
+  margin-right: auto;
+}
+
+
+@media (width <=26rem) {
+    .container {
+        padding-inline: 2rem;
+    }
+
+    #div-logo {
+        display: none;
+    }
+
+    form div {
+        flex-direction: column;
+    }
+}
